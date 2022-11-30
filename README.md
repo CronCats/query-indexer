@@ -7,3 +7,17 @@ See the `src/queries` directory for a list of files that contain database querie
 You may use Postman to hit the database at:
 
     http://localhost:8080/txs
+
+# Start
+
+```
+npm i
+cp .env.template .env
+```
+
+Change environment variables in `.env`
+
+    npm run go
+
+Ctrl + C to cancel
+   
