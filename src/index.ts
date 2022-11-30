@@ -12,7 +12,7 @@ app.use(express.urlencoded({extended: false}))
 app.use(express.json())
 
 const DB_HOSTIP = process.env.DB_HOSTIP
-const DB_HOSTPORT: number = Number.parseInt(process.env.DB_HOSTPORT)
+const DB_PORT: number = Number.parseInt(process.env.DB_PORT)
 const DB_NAME = process.env.DB_NAME
 const DB_USER = process.env.DB_USER
 const DB_PASS = process.env.DB_PASS
@@ -27,7 +27,7 @@ const getDb = () => {
             password: DB_PASS,
             database: DB_NAME,
             host: DB_HOSTIP,
-            port: DB_HOSTPORT,
+            port: DB_PORT,
             ssl: enableSSL
         },
         pool: {
@@ -69,7 +69,7 @@ app.get('/txs', async (req, res) => {
     }
 })
 
-const server = app.listen(26657, () => {
+const server = app.listen(8080, () => {
     console.log("listenin'")
 })
 
