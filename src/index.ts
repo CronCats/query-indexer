@@ -54,7 +54,9 @@ app.get('/tasks', async (req, res) => {
     res.status(200).send()
 })
 
-app.get('/tasks/:taskHash/deposits', async (req, res) => {
+// Get deposits by task hash 
+// Default denom is "ujunox"
+app.get('/tasks/:taskHash/deposits/:denom?', async (req, res) => {
     try {
         let results = await taskDepositByHash(req.params)
         res.status(!results ? 400 : 200).send(results)
