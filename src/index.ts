@@ -3,6 +3,7 @@ import cors from 'cors'
 import {config} from "dotenv"
 import knex from "knex";
 import {txs} from "./queries/tx";
+import { agentBalances } from './queries/agents';
 config({ path: '.env' })
 const app = express()
 
@@ -46,6 +47,16 @@ export const db = getDb()
 app.get('/agents', async (req, res) => {
     console.log("list all agents…")
     res.status(200).send()
+})
+
+app.get('/agent/:agentAddress', async (req, res) => {
+    try {
+        let results = await agentBalances(req.params)
+        res.status(!results ? 400 : 200).send(results)
+    } catch (err) {
+        console.warn('Error getting agent balances', err, req.params)
+        res.status(400).send({error: err})
+    }
 })
 
 app.get('/tasks', async (req, res) => {
