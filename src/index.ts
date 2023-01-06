@@ -4,6 +4,7 @@ import {config} from "dotenv"
 import knex from "knex";
 import {txs} from "./queries/tx";
 import { agentBalances } from './queries/agents';
+import { taskDepositByHash } from './queries/tasks';
 config({ path: '.env' })
 const app = express()
 
@@ -62,6 +63,18 @@ app.get('/agent/:agentAddress', async (req, res) => {
 app.get('/tasks', async (req, res) => {
     console.log("list all tasks…")
     res.status(200).send()
+})
+
+// Get deposits by task hash
+// Default denom is "ujunox"
+app.get('/tasks/:taskHash/deposits/:denom?', async (req, res) => {
+    try {
+        let results = await taskDepositByHash(req.params)
+        res.status(!results ? 400 : 200).send(results)
+    } catch (err) {
+        console.warn('Error hitting task deposit', err, req.params)
+        res.status(400).send({error: err})
+    }
 })
 
 app.get('/config', async (req, res) => {
